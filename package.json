@@ -1,0 +1,21 @@
+{
+  "name": "quiz-quest-pplg-v5",
+  "version": "5.0.0",
+  "private": true,
+  "description": "Quiz Quest PPLG V5 - Neon Battle Arena with multiplayer rooms",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "mysql2": "^3.11.5",
+    "socket.io": "^4.8.1"
+  }
+}

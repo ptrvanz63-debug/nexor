@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="id">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+  <meta content="#080d1b" name="theme-color"/>
+  <meta content="NEXORA QUIZ GAME &mdash; arena kuis edukasi dan multiplayer untuk siswa PPLG." name="description"/>
+  <title>
+   NEXORA QUIZ GAME &mdash; QUIZ ARENA
+  </title>
+  <link href="/style.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <div class="wrap">
+   <header class="top">
+    <div class="brand">
+     NEXORA QUIZ GAME
+    </div>
+    <span class="tag">
+     V5 &bull; QUIZ ARENA
+    </span>
+   </header>
+   <section class="panel auth" id="auth">
+    <div class="badge">
+     PLAYER ACCESS
+    </div>
+    <h1 class="title">
+     ENTER THE
+     <span class="gradient">
+      ARENA
+     </span>
+    </h1>
+    <p class="muted">
+    ASAH OTAK ANDA DI GAMES INI
+    </p>
+    <div class="tabs">
+     <button class="btn" id="loginTab">
+      LOGIN
+     </button>
+     <button class="btn secondary" id="registerTab">
+      DAFTAR
+     </button>
+    </div>
+    <input aria-label="Username" autocomplete="username" class="field" id="username" maxlength="30" name="username" placeholder="Username"/>
+    <input aria-label="Password" autocomplete="current-password" class="field" id="password" name="password" placeholder="Password (minimal 6 karakter)" type="password"/>
+    <button class="btn full" id="authBtn">
+     MASUK ARENA
+    </button>
+    <p class="muted" id="authMsg">
+    </p>
+   </section>
+   <section class="hidden" id="dashboard">
+    <div class="panel">
+     <div class="top" style="margin:0">
+      <div>
+       <span class="badge">
+        COMMAND CENTER
+       </span>
+       <h1 class="title">
+        WELCOME,
+        <span class="gradient" id="playerName">
+         PLAYER
+        </span>
+       </h1>
+       <div class="muted">
+        JAWAB 10 SOAL DENGAN CEPAT DAN BENAR UNTUK MENANG!
+       </div>
+      </div>
+      <button class="btn secondary" id="logout">
+       KELUAR
+      </button>
+     </div>
+     <div class="stats">
+      <div class="stat">
+       <small>
+        TOTAL XP
+       </small>
+       <strong id="xp">
+        0
+       </strong>
+      </div>
+      <div class="stat">
+       <small>
+        COINS
+       </small>
+       <strong id="coins">
+        0
+       </strong>
+      </div>
+      <div class="stat">
+       <small>
+        WINS
+       </small>
+       <strong id="wins">
+        0
+       </strong>
+      </div>
+      <div class="stat">
+       <small>
+        MATCH
+       </small>
+       <strong id="played">
+        0
+       </strong>
+      </div>
+     </div>
+    </div>
+    <div class="grid" style="margin-top:18px">
+     <div class="panel">
+      <h2 class="section">
+       PILIH MODE PERTANDINGAN
+      </h2>
+      <div class="modegrid">
+       <div class="mode">
+        <span class="badge">
+         INSTANT
+        </span>
+        <h3>
+         Quick Match
+        </h3>
+        <p>
+        MENGACAK PLAYER YANG ONLINE, JIKA TIDAK ADA AKAN MELAWAN NEXORA BOT
+        </p>
+        <button class="btn full" id="quick">
+         CARI LAWAN
+        </button>
+       </div>
+       <div class="mode">
+        <span class="badge">
+         CUSTOM
+        </span>
+        <h3>
+         Pilih Lawan
+        </h3>
+        <p>
+        PILIH LAWAN DARI DAFTAR ONLINE UNTUK BERTANDING 1V1
+        </p>
+        <button class="btn full pink" id="refreshPlayers">
+         LIHAT PEMAIN
+        </button>
+       </div>
+       <div class="mode">
+        <span class="badge">
+         MULTIPLAYER
+        </span>
+        <h3>
+         Room Battle
+        </h3>
+        <p>
+        CREATE ROOM ATAU BERGABUNG DENGAN ROOM YANG SUDAH TERSEDIA
+        </p>
+        <button class="btn full" id="openRoom">
+         BUKA ROOM
+        </button>
+       </div>
+      </div>
+      <div id="players" style="margin-top:17px">
+      </div>
+      <div class="feedback hidden" id="queueBox">
+       Mencari lawan...
+       <button class="btn secondary" id="cancelQueue">
+        BATAL
+       </button>
+      </div>
+     </div>
+     <aside class="panel">
+      <h2 class="section">
+       TOP PLAYERS
+      </h2>
+      <div class="muted" id="leaderboard">
+       Memuat...
+      </div>
+      <hr style="border-color:#293456;margin:18px 0"/>
+      <h2 class="section">
+       MATERI PERTANDINGAN
+      </h2>
+      <p class="muted">
+       Pemrograman &bull; HTML/CSS/JS &bull; Basis Data &bull; Algoritma &bull; Jaringan &bull; Git &bull; UI/UX &bull; Testing &bull; SDLC.
+      </p>
+      <span class="badge">
+       10 SOAL / MATCH
+      </span>
+     </aside>
+    </div>
+   </section>
+   <section class="panel hidden" id="roomPage" style="margin-top:18px">
+    <span class="badge">
+     MULTIPLAYER ROOM
+    </span>
+    <h2 class="title">
+     ROOM
+     <span class="gradient">
+      ARENA
+     </span>
+    </h2>
+    <div class="modegrid">
+     <div class="mode">
+      <h3>
+       CREATE ROOM
+      </h3>
+      <input aria-label="Nama room baru" class="field" id="createRoomName" maxlength="24" name="createRoomName" placeholder="Nama room (3-24 karakter)"/>
+      <label class="muted">
+       MAX PLAYERS
+      </label>
+      <select class="field" id="roomCapacity">
+       <option value="2">
+        2 Pemain
+       </option>
+       <option selected="" value="4">
+        4 Pemain
+       </option>
+       <option value="6">
+        6 Pemain
+       </option>
+       <option value="8">
+        8 Pemain
+       </option>
+       <option value="10">
+        10 Pemain
+       </option>
+       <option value="12">
+        12 Pemain
+       </option>
+      </select>
+      <button class="btn full" id="createRoom">
+       BUAT ROOM
+      </button>
+     </div>
+     <div class="mode">
+      <h3>
+       JOIN ROOM
+      </h3>
+      <input aria-label="Nama room yang akan dimasuki" class="field" id="joinRoomName" name="joinRoomName" placeholder="Masukkan nama room"/>
+      <button class="btn full pink" id="joinRoom">
+       GABUNG ROOM
+      </button>
+     </div>
+    </div>
+    <div class="hidden" id="roomLobby" style="margin-top:20px">
+     <h3 class="section" id="roomTitle">
+      ROOM LOBBY
+     </h3>
+     <div class="muted" id="roomMeta">
+     </div>
+     <div id="roomPlayers">
+     </div>
+     <div class="modegrid" style="margin-top:12px">
+      <button class="btn secondary" id="roomReady">
+       READY / NOT READY
+      </button>
+      <button class="btn" id="roomStart">
+       MULAI PERTANDINGAN (HOST)
+      </button>
+      <button class="btn secondary" id="leaveRoom">
+       KELUAR ROOM
+      </button>
+     </div>
+    </div>
+    <p class="muted" id="roomMessage">
+    </p>
+    <button class="btn secondary" id="closeRoomPage" style="margin-top:12px">
+     KEMBALI
+    </button>
+   </section>
+   <section class="panel arena hidden" id="roomBattle">
+    <div class="arenahead">
+     <div>
+      <span class="badge" id="roomBattleName">
+       ROOM BATTLE
+      </span>
+      <h2 class="section">
+       ROUND
+       <span id="roomRound">
+        1
+       </span>
+       / 10
+      </h2>
+     </div>
+     <div class="timer" id="roomTimer">
+      20
+     </div>
+    </div>
+    <div class="question" id="roomQuestion">
+     Menyiapkan soal...
+    </div>
+    <div class="answers" id="roomAnswers">
+    </div>
+    <div class="feedback hidden" id="roomFeedback">
+    </div>
+    <h3 class="section">
+     KLASEMEN
+    </h3>
+    <div id="roomScores">
+    </div>
+   </section>
+   <section class="panel arena hidden" id="arena">
+    <div class="arenahead">
+     <div>
+      <span class="badge" id="matchMode">
+       BATTLE
+      </span>
+      <h2 class="section" style="margin-top:10px">
+       ROUND
+       <span id="round">
+        1
+       </span>
+       / 10
+      </h2>
+     </div>
+     <div class="timer" id="timer">
+      18
+     </div>
+    </div>
+    <div class="grid" style="grid-template-columns:1fr 1fr;gap:10px">
+     <div>
+      <b id="p1">
+       YOU
+      </b>
+      <div class="hpbar">
+       <div class="hpfill" id="hp0" style="width:100%">
+       </div>
+      </div>
+      <small id="score0">
+       0 PTS
+      </small>
+     </div>
+     <div>
+      <b id="p2">
+       OPPONENT
+      </b>
+      <div class="hpbar">
+       <div class="hpfill" id="hp1" style="width:100%">
+       </div>
+      </div>
+      <small id="score1">
+       0 PTS
+      </small>
+     </div>
+    </div>
+    <div style="margin-top:25px">
+     <span class="badge" id="category">
+      CATEGORY
+     </span>
+     <div class="question" id="question">
+      Menyiapkan soal...
+     </div>
+     <div class="answers" id="answers">
+     </div>
+     <div class="feedback hidden" id="feedback">
+     </div>
+     <p class="muted" id="turnInfo">
+      Tunggu giliran...
+     </p>
+    </div>
+   </section>
+   <section class="panel arena hidden" id="result">
+    <span class="badge">
+     MATCH COMPLETE
+    </span>
+    <h1 class="title" id="resultTitle">
+     VICTORY!
+    </h1>
+    <p class="muted" id="resultText">
+    </p>
+    <div class="stats">
+     <div class="stat">
+      <small>
+       YOUR SCORE
+      </small>
+      <strong id="finalScore">
+       0
+      </strong>
+     </div>
+     <div class="stat">
+      <small>
+       XP EARNED
+      </small>
+      <strong id="earnedXp">
+       0
+      </strong>
+     </div>
+     <div class="stat">
+      <small>
+       REWARD
+      </small>
+      <strong id="earnedCoins">
+       0
+      </strong>
+     </div>
+     <div class="stat">
+      <small>
+       QUESTIONS
+      </small>
+      <strong>
+       10/10
+      </strong>
+     </div>
+    </div>
+    <button class="btn full" id="backHome">
+     KEMBALI KE LOBBY
+    </button>
+   </section>
+   <div class="footer">
+    NEXORA QUIZ GAMES &bull; TEST KEMAMPUAN ANDA
+   </div>
+  </div>
+  <div class="toast hidden" id="toast">
+  </div>
+  <script src="/socket.io/socket.io.js">
+  </script>
+  <script defer="" src="/app.js">
+  </script>
+ </body>
+</html>
+
